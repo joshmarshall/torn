@@ -1,0 +1,93 @@
+{% extends base.htm %}
+
+{% block title %}Congratulations!{% end block %}
+
+{% block body %}
+<h1>Congratulations!</h1>
+<div class="separator"></div>
+<p>
+	You've started a new Torn project! If you are not
+	familiar with the Tornado process, you should head
+	over to http://www.tornadoweb.org and read the
+	tutorial.
+<p>
+	
+<p>
+	To get started, you'll want to browse the structure
+	of the site. Here are a few pointers (click for details):
+</p>
+
+<ul>
+	<li>
+		<p class="title"><b>start.py</b> - the startup settings</p>
+		<p class="detail">This file starts up the server.
+		If you need to overwrite the default starting 
+		behavior, look into this file. Otherwise, you can
+		start the server with <br/>
+		<code>torn-admin.py start [directory]</code>
+		</p>
+	</li>
+	<li>
+		<p class="title"><b>app/</b> - the logic folder</p>
+		<p class="detail">This directory contains all of your
+		program "logic" -- i.e. the views, settings, etc.
+		You will probably create submodules under this 
+		directory (like app/libraries, etc.) and import them
+		using absolute imports like:<br/>
+		<code>from app.libraries import awesome</code></p>
+	</li>
+	<li>
+		<p class="title"><b>app/settings.py</b> - default settings</p>
+		<p class="detail">This file contains all of
+		the default application settings. Any new settings should be
+		entered here. However, if you are needing to override the
+		default settings, you should create a <code>settings.py</code> file in 
+		the root directory with a "settings" dictionary. That 
+		will automatically override any default settings in 
+		<code>app/settings.py</code>.</p>
+	</li>
+	<li>
+		<p class="title"><b>app/views/</b> - view logic</p>
+		<p class="detail">This directory should be where
+		you put all of your request handlers. There should
+		already be an index.py, which contains the simple
+		code to display this page.</p>
+	</li>
+	<li>
+		<p class="title"><b>app/views/__init__.py</b> - route list</p>
+		<p class="detail">This is where all of
+		the views are imported and added to the routes.
+		When adding new handler files under views, make
+		sure you import them here!</p>
+	</li>
+	<li>
+		<p class="title"><b>app/views/uimodules/</b> - uimodule logic</p>
+		<p class="detail">This is where all of your
+		UIModule classes should live. It is already added to
+		the project by default.</p>
+	</li>
+	<li>
+		<p class="title"><b>app/views/uimodules/__init__.py</b> - 
+			uimodule list</p>
+		<p class="detail">You'll need to
+		import your individual UIModule classes into this file
+		in order to use them in your templates.</p>
+	</li>
+	<li>
+		<p class="title"><b>templates/</b> - template root folder</p>
+		<p class="detail">This is where all of the
+		template files live. For example, this file is
+		index.htm and should already be in the templates
+		folder, as should base.htm (which index.htm extends).</p>
+	</li>
+	<li>
+		<p class="title"><b>static/</b> - misc css, js, image, etc. files</p>
+		<p class="detail">Place any CSS, Javascript, images,
+		etc. under this folder. There should already be
+		css/ and js/ folders under the directory -- you'll
+		probably make the images/ folder pretty quickly!.</p>
+	</li>
+</ul>
+
+<p>Best of luck with your sweet new app!</p>
+{% end block %}

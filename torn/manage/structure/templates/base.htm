@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>{% block title %}A Torn Project{% end block %}</title>
+		{% for js_file in js_files %}
+		<script src="/static/js/{{ js_file }}" type="text/javascript"></script>
+		{% end for %}
+		{% for css_file in css_files %}
+		<link href="/static/css/{{ css_file }}" rel="stylesheet"/>
+		{% end for %}
+
+	</head>
+
+	<body>
+		{% block body %}
+		<h1>Content Goes Here!</h1>
+		<div class="separator"></div>
+		<p>You should probably extend this.</p>
+		{% end block %}
+	</body>
+</html>
