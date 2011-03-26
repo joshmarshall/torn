@@ -31,4 +31,4 @@ class Create(object):
                 print "\tCreating file      %s" % new_path
                 shutil.copy2(orig_path, new_path)
         print "You're done!"
-        print "Start the app with torn-admin.py start %s" % dest_dir 
+        print "Start the app with torn-admin.py start %s" % dest_dir

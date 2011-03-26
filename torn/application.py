@@ -7,7 +7,7 @@ class Application(TornadoApp):
     set the basic logger level until we find a better
     way.
     """
-    
+
     def __init__(self, *args, **kwargs):
         # There HAS to be a better way to do this...
         loglevel = kwargs.get('loglevel')
