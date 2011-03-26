@@ -1,5 +1,7 @@
 import os
 import shutil
+import re
+from random import choice
 
 class ProjectAlreadyExists(Exception):
     pass
@@ -30,5 +32,20 @@ class Create(object):
                 new_path = os.path.join(base_dir, f)
                 print "\tCreating file      %s" % new_path
                 shutil.copy2(orig_path, new_path)
+        self._write_initial_cookie_secret(dest_dir)
         print "You're done!"
         print "Start the app with torn-admin.py start %s" % dest_dir
+
+    def _write_initial_cookie_secret(self, dest_dir):
+        cookie = ''.join([
+            choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
+            for i in range(50) ])
+
+        settings_file = os.path.join(dest_dir, "app", "settings.py")
+        settings = open(settings_file, 'r').read()
+
+        new_settings = re.sub(r'<COOKIE_SECRET>', cookie, settings)
+
+        fp = open(settings_file, 'w')
+        fp.write(new_settings)
+        fp.close()

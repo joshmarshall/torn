@@ -4,6 +4,7 @@ import torn.manage
 import os
 import shutil
 import tempfile
+import sys
 
 class TestCreate(TestCase):
 
@@ -40,6 +41,13 @@ class TestCreate(TestCase):
     def test_exists(self):
         """ Test that it won't try to recreate directory """
         self.assertRaises(ProjectAlreadyExists, self.create, self.tmp)
+
+    def test_cookie_secret(self):
+        """ Test that initial random cookie is generated for settings.py """
+        sys.path.append(self.tmp)
+        from app.settings import settings
+        self.assertTrue(settings['cookie_secret'])
+        self.assertNotEqual(settings['cookie_secret'], '<COOKIE_SECRET>')
 
     def tearDown(self):
         shutil.rmtree(self.tmp)
