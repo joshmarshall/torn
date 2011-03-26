@@ -32,12 +32,13 @@ class Create(object):
                 new_path = os.path.join(base_dir, f)
                 print "\tCreating file      %s" % new_path
                 shutil.copy2(orig_path, new_path)
-        self._write_initial_cookie_secret(dest_dir)
+        self._write_initial_cookie_secret(dest_dir,
+                kwargs.get('cookie_secret'))
         print "You're done!"
         print "Start the app with torn-admin.py start %s" % dest_dir
 
-    def _write_initial_cookie_secret(self, dest_dir):
-        cookie = ''.join([
+    def _write_initial_cookie_secret(self, dest_dir, cookie=None):
+        cookie = cookie or ''.join([
             choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
             for i in range(50) ])
 

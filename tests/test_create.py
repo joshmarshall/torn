@@ -9,10 +9,14 @@ import sys
 class TestCreate(TestCase):
 
     def setUp(self):
-        self.tmp = tempfile.mkdtemp(prefix="torn_tmp_")
-        os.rmdir(self.tmp)
+        self.tmp = self._create()
+
+    def _create(self, **kwargs):
+        tmp = tempfile.mkdtemp(prefix="torn_tmp_")
+        os.rmdir(tmp)
         self.create = Create()
-        self.create(self.tmp)
+        self.create(tmp, **kwargs)
+        return tmp
 
     def test_create(self):
         """ Test that all the proper files were created. """
@@ -44,10 +48,12 @@ class TestCreate(TestCase):
 
     def test_cookie_secret(self):
         """ Test that initial random cookie is generated for settings.py """
-        sys.path.append(self.tmp)
+        test_secret = "this_is_my_secret"
+        tmp = self._create(cookie_secret=test_secret)
+        sys.path.append(tmp)
         from app.settings import settings
-        self.assertTrue(settings['cookie_secret'])
-        self.assertNotEqual(settings['cookie_secret'], '<COOKIE_SECRET>')
+        self.assertEqual(settings['cookie_secret'], test_secret)
+        shutil.rmtree(tmp)
 
     def tearDown(self):
         shutil.rmtree(self.tmp)
