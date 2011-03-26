@@ -10,7 +10,7 @@ from torn.config import load_settings
 from os.path import join, dirname, abspath
 
 settings = load_settings(dict(
-    
+
     # Add your settings here
     port = 8080,
     address = "",
