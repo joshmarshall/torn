@@ -14,11 +14,16 @@ class TestCreate(TestCase):
         self.test_secret = "this_is_my_secret"
         self.tmp = self._create(cookie_secret=self.test_secret)
 
-    def _create(self, **kwargs):
-        tmp = tempfile.mkdtemp(prefix="torn_tmp_")
-        os.rmdir(tmp)
+    def _create(self, tmp=None, **kwargs):
+        if not tmp:
+            tmp = tempfile.mkdtemp(prefix="torn_tmp_")
+            os.rmdir(tmp)
         self.create = Create()
-        self.create(tmp, **kwargs)
+        args = [tmp,]
+        for key, val in kwargs.iteritems():
+            args.append('--%s' % key)
+            args.append(str(val))
+        self.create(args)
         return tmp
 
     def test_create(self):
@@ -35,7 +40,6 @@ class TestCreate(TestCase):
                 new_file = os.path.join(base, f).replace(struct_dir, self.tmp)
                 files_to_test.append(new_file)
         for d in dirs_to_test:
-            print d
             self.assertTrue(os.path.exists(d))
             self.assertTrue(os.path.isdir(d))
         for f in files_to_test:
@@ -45,9 +49,14 @@ class TestCreate(TestCase):
                 self.assertTrue(os.path.exists(f))
                 self.assertTrue(os.path.isfile(f))
 
+    def test_no_directory(self):
+        """ Test that the system fails without directory """
+        create = Create()
+        self.assertRaises(TypeError, create.run)
+
     def test_exists(self):
         """ Test that it won't try to recreate directory """
-        self.assertRaises(ProjectAlreadyExists, self.create, self.tmp)
+        self.assertRaises(ProjectAlreadyExists, self._create, self.tmp)
 
     def test_settings(self):
         """ Test that settings parameters are properly set
