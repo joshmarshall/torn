@@ -2,7 +2,7 @@ import functools
 from tornado.web import RequestHandler, authenticated, asynchronous
 
 class Handler(RequestHandler):
-    
+
     def render_string(self, template, **kwargs):
         css_files = []
         js_files = []
@@ -29,7 +29,6 @@ def style(*styles):
 
 
 def script(*scripts):
-    
     def wrapper(f):
         @functools.wraps(f)
         def wrapped(self, *args, **kwargs):

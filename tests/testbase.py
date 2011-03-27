@@ -2,7 +2,7 @@ from unittest import TestCase
 from torn.base import script, style
 
 class TestDecorators(TestCase):
-    
+
     def test_style(self):
         """ Verify that the css files are being added via decorator."""
         class Foo(object):

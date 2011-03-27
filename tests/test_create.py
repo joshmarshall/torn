@@ -6,14 +6,20 @@ import os
 import sys
 import shutil
 import tempfile
+import sys
 
 class TestCreate(TestCase):
 
     def setUp(self):
-        self.tmp = tempfile.mkdtemp(prefix="torn_tmp_")
-        os.rmdir(self.tmp)
+        self.test_secret = "this_is_my_secret"
+        self.tmp = self._create(cookie_secret=self.test_secret)
+
+    def _create(self, **kwargs):
+        tmp = tempfile.mkdtemp(prefix="torn_tmp_")
+        os.rmdir(tmp)
         self.create = Create()
-        self.create(self.tmp)
+        self.create(tmp, **kwargs)
+        return tmp
 
     def test_create(self):
         """ Test that all the proper files were created. """
@@ -46,6 +52,10 @@ class TestCreate(TestCase):
     def test_settings(self):
         """ Test that settings parameters are properly set
         and also properly overidden.
+
+        Due to module cacheing, there are more tests here
+        than there should be. We need to figure out a way
+        around it...
         """
         test_settings = torn.config.load_settings({"port": 8000})
         self.assertTrue(test_settings.port == 8000)
@@ -56,9 +66,10 @@ class TestCreate(TestCase):
         fp.write(content)
         fp.close()
         sys.path.append(self.tmp)
-        import app.settings
+        from app.settings import settings
         sys.path.remove(self.tmp)
-        self.assertTrue(app.settings.settings.port == port)
+        self.assertTrue(settings.port == port)
+        self.assertEqual(settings['cookie_secret'], self.test_secret)
 
     def tearDown(self):
         shutil.rmtree(self.tmp)
