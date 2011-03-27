@@ -24,6 +24,18 @@ THE SOFTWARE.
 """
 
 from distutils.core import setup
+from distutils.command.build import build
+import tarfile
+
+class ProcessStructure(build):
+    """ Simply generates a .tar.gz for the site template """
+
+    def run(self):
+        tar = tarfile.open("torn/structure.tar.gz", mode="w:gz")
+        tar.add("torn/data/structure")
+        tar.close()
+
+        build.run(self)
 
 setup(
     name="torn",
@@ -33,14 +45,12 @@ setup(
     author_email="catchjosh@gmail.com",
     url = "http://github.com/joshmarshall/torn/",
     license = "http://www.opensource.org/licenses/mit-license.php",
+    package_data = {'torn': ['structure.tar.gz',]},
     packages=["torn", "torn.manage"],
-    package_data={"torn.manage": ["structure/*.py",
-                                  "structure/static/css/*.css",
-                                  "structure/static/js/*.js",
-                                  "structure/templates/*.htm",
-                                  "structure/app/*.py",
-                                  "structure/app/views/*.py",
-                                  "structure/app/views/uimodules/*.py"]},
+    package_dir={"torn": "torn",
+                 "torn.manage": "torn/manage"},
+
     scripts=["scripts/torn-admin.py",],
-    install_requires=["tornado",]
+    install_requires=["tornado",],
+    cmdclass={"build": ProcessStructure}
 )

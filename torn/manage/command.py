@@ -47,7 +47,8 @@ class Command(object):
         except TypeError:
             # Are we hiding potential bugs with this?
             self.parser.print_usage()
-            sys.exit()
+            raise
+            #sys.exit()
 
     def run(self, *args, **kwargs):
         """ This should be overwritten in the subclasses
