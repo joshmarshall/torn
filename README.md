@@ -57,12 +57,12 @@ Settings
 --------
 All default settings should be entered in project/app/settings.py .
 However, if you need to override any of these settings, whether in a
-development or production enviroment, you can create a project/settings.py
-file which will automatically be imported. This is designed so that
-the app/settings.py file can be under version control, and all mission-critical
-or deployment settings don't have to be.
+development or production enviroment, you can create a 
+project/settings_local.py file which will automatically be imported. 
+This is designed so that the app/settings.py file can be under version 
+control, and all mission-critical or deployment settings don't have to be.
 
-An example project/settings.py should look like:
+An example project/settings_local.py should look like:
 
 	settings = {
 		"port": 8081,

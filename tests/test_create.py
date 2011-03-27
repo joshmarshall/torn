@@ -1,7 +1,9 @@
 from unittest import TestCase
 from torn.manage.create import Create, ProjectAlreadyExists
 import torn.manage
+import torn.config
 import os
+import sys
 import shutil
 import tempfile
 
@@ -40,6 +42,23 @@ class TestCreate(TestCase):
     def test_exists(self):
         """ Test that it won't try to recreate directory """
         self.assertRaises(ProjectAlreadyExists, self.create, self.tmp)
+
+    def test_settings(self):
+        """ Test that settings parameters are properly set
+        and also properly overidden.
+        """
+        test_settings = torn.config.load_settings({"port": 8000})
+        self.assertTrue(test_settings.port == 8000)
+        port = 1337
+        content = """settings={"port":%d}""" % port
+        path = os.path.join(self.tmp, "settings_local.py")
+        fp = open(path, "w")
+        fp.write(content)
+        fp.close()
+        sys.path.append(self.tmp)
+        import app.settings
+        sys.path.remove(self.tmp)
+        self.assertTrue(app.settings.settings.port == port)
 
     def tearDown(self):
         shutil.rmtree(self.tmp)
