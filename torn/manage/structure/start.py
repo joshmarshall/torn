@@ -7,9 +7,9 @@ below.
 from torn.application import Application
 from torn.server import Server
 from torn.util import parse_command_line
-from app.views import routes
-from app.views import uimodules
-from app.settings import settings
+from <APP>.views import routes
+from <APP>.views import uimodules
+from <APP>.settings import settings
 import logging
 
 def main():

@@ -28,7 +28,7 @@ class Command(object):
         """ Just a wrapper for the parser.set_usage method. """
         self.parser.set_usage(*args, **kwargs)
 
-    def __call__(self, test_args):
+    def __call__(self, test_args=None):
         """ Ensures that the "run()" method is called
         with the proper args and kwargs passed in from
         the optparser.

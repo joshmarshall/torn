@@ -11,12 +11,12 @@ COMMANDS = dict(create=Create,
 class UnknownCommand(Exception):
     pass
 
-def run_command(command_name, *args, **kwargs):
+def run_command(command_name):
     command_class = COMMANDS.get(command_name)
     if not command_class:
         raise UnknownCommand(command_name)
     command = command_class()
-    command(*args, **kwargs)
+    command()
 
 def usage():
     print "USAGE:"
@@ -27,10 +27,8 @@ def usage():
 def run_command_line():
     if len(sys.argv) < 2:
         return usage()
-    command = sys.argv[1]
-    args = sys.argv[2:]
+    command = sys.argv.pop(1)
     try:
-        result = run_command(command, *args)
+        run_command(command)
     except UnknownCommand:
         return usage()
-    return result

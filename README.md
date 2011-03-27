@@ -53,6 +53,21 @@ on the command line:
 
 	torn-admin.py start path/to/project/ -p 8081
 
+To see the options of any command, just run:
+
+	torn-admin.py COMMAND -h
+
+Here are some of the options for the create command:
+
+	Usage: torn-admin.py create [options] <project_directory>
+
+	Options:
+	  -h, --help            show this help message and exit
+	  -c COOKIE_SECRET, --cookie_secret=COOKIE_SECRET
+    	                    the default cookie secret
+	  -a APP, --app=APP     the app module name (default 'app')
+	  -p PORT, --port=PORT  the default port (default 8080)
+
 Settings
 --------
 All default settings should be entered in project/app/settings.py .

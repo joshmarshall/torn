@@ -12,7 +12,7 @@ from os.path import join, dirname, abspath
 settings = load_settings(dict(
 
     # Add your settings here
-    port = 8080,
+    port = <PORT>,
     address = "",
     debug = True,
     cookie_secret = "<COOKIE_SECRET>",

@@ -6,7 +6,7 @@ route.get_routes() method as shown below.
 """
 
 # Import all the views you want to utilize
-import app.views.index
+import <APP>.views.index
 
 
 # After all views are imported...
