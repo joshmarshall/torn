@@ -4,6 +4,7 @@ Tornado instances.
 """
 from optparse import OptionParser
 import sys
+import logging
 
 # Default command parser
 PARSER = OptionParser()
@@ -36,3 +37,25 @@ def parse_command_line(settings):
     if options.loglevel:
         settings.loglevel = options.loglevel
     return settings
+
+
+def setLoggerLevel(logger, level):
+    """
+    Set the given logger's loglevel to the given
+    integer or string level.
+
+    Based on:
+        http://bugs.python.org/issue6314#msg90214
+    """
+    if isinstance(level, int):
+        rv = level
+    elif str(level) == level:
+        try:
+            rv = int(logging.getLevelName(level.upper()))
+        except:
+            raise ValueError("Unknown level: %r" % level)
+    else:
+        raise TypeError("Level not valid: %r" % level)
+
+    logger.setLevel(rv)
+    return rv
