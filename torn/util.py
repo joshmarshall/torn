@@ -4,7 +4,6 @@ Tornado instances.
 """
 from optparse import OptionParser
 import sys
-import logging
 
 # Default command parser
 PARSER = OptionParser()
