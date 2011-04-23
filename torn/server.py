@@ -1,5 +1,6 @@
 import tornado.httpserver
 import tornado.ioloop
+import logging
 
 class Server(tornado.httpserver.HTTPServer):
     """ Reserving the right to override if necessary. """
@@ -8,4 +9,7 @@ class Server(tornado.httpserver.HTTPServer):
         if not address:
             address = ""
         self.listen(port, address=address)
-        tornado.ioloop.IOLoop.instance().start()
+        try:
+            tornado.ioloop.IOLoop.instance().start()
+        except KeyboardInterrupt:
+            logging.info("rcvd KeyboardInterrupt, exiting...")
