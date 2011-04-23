@@ -1,4 +1,5 @@
 from tornado.web import Application as TornadoApp
+from util import setLoggerLevel
 import logging
 
 class Application(TornadoApp):
@@ -9,17 +10,9 @@ class Application(TornadoApp):
     """
 
     def __init__(self, *args, **kwargs):
-        # There HAS to be a better way to do this...
+        # set logger level if provided
         loglevel = kwargs.get('loglevel')
         if loglevel and loglevel != "none":
             base_logger = logging.getLogger()
-            if loglevel == "debug":
-                base_logger.setLevel(logging.DEBUG)
-            elif loglevel == "info":
-                base_logger.setLevel(logging.INFO)
-            elif loglevel == "warning":
-                base_logger.setLevel(logging.WARNING)
-            elif loglevel == "error":
-                base_logger.setLevel(logging.ERROR)
+            setLoggerLevel(base_logger, loglevel)
         super(type(self), self).__init__(*args, **kwargs)
-
